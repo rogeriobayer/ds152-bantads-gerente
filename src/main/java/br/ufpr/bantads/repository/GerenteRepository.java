@@ -1,0 +1,11 @@
+package br.ufpr.bantads.repository;
+
+import org.springframework.data.jpa.repository.*;
+
+import br.ufpr.bantads.model.Gerente;
+
+public interface GerenteRepository extends JpaRepository<Gerente, Long>{
+	
+	public Gerente findByCpf(String cpf);
+
+}
