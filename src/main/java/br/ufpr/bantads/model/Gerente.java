@@ -17,7 +17,7 @@ public class Gerente implements Serializable {
 	private String nome;
 	private String cpf;
 	private String email;
-	private int num_clientes;
+	private int numClientes;
 	
 	public Gerente() {
 		super();
@@ -29,7 +29,7 @@ public class Gerente implements Serializable {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
-		this.num_clientes = num_clientes;
+		this.numClientes = num_clientes;
 	}
 
 	public Long getId() {
@@ -57,10 +57,10 @@ public class Gerente implements Serializable {
 		this.email = email;
 	}
 	public int getNum_clientes() {
-		return num_clientes;
+		return numClientes;
 	}
 	public void setNum_clientes(int num_clientes) {
-		this.num_clientes = num_clientes;
+		this.numClientes = num_clientes;
 	}
 	public static Long getSerialversionuid() {
 		return serialVersionUID;

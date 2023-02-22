@@ -1,5 +1,7 @@
-package br.ufpr.bantads.rest;
+package br.ufpr.bantads.controller;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +19,7 @@ import br.ufpr.bantads.repository.GerenteResponse;
 
 @CrossOrigin
 @RestController
-public class GerenteREST {
+public class GerenteController {
 
 	@Autowired
 	private GerenteRepository repo;
@@ -60,8 +62,10 @@ public class GerenteREST {
 	@DeleteMapping("/gerentes/{id}")
 	public ResponseEntity<Object> removerGerente(@PathVariable("id") Long id) {
 		Optional<Gerente> g = repo.findById(id);
-		if (!(g.isEmpty())) {
+		List<Gerente> gerentes = repo.findAll();
+		if (g.isPresent()) {
 			Gerente ger = g.get();
+			gerentes.sort(Comparator.comparing(Gerente::getNum_clientes));
 			repo.deleteById(ger.getId());
 			return new ResponseEntity<>(new GerenteResponse(true, "Gerente removido com sucesso", null), HttpStatus.OK);
 		}
@@ -73,7 +77,7 @@ public class GerenteREST {
 	@PutMapping("/gerentes/{id}")
 	public ResponseEntity<Object> alterarGerente(@PathVariable("id") Long id, @RequestBody Gerente gerente) {
 		Optional<Gerente> g = repo.findById(id);
-		if (!(g.isEmpty())) {
+		if (g.isPresent()) {
 			Gerente ger = g.get();
 			ger.setNome(gerente.getNome());
 			ger.setCpf(gerente.getCpf());

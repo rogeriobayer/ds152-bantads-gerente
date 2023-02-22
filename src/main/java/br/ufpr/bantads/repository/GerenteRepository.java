@@ -7,5 +7,6 @@ import br.ufpr.bantads.model.Gerente;
 public interface GerenteRepository extends JpaRepository<Gerente, Long>{
 	
 	public Gerente findByCpf(String cpf);
+	public Gerente findFirstByOrderByNumClientes();
 
 }

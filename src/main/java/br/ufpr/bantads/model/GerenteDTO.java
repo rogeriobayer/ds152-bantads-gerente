@@ -11,7 +11,7 @@ public class GerenteDTO implements Serializable {
 	private String nome;
 	private String cpf;
 	private String email;
-	private int num_clientes;
+	private int numClientes;
 
 	public GerenteDTO() {
 		super();
@@ -58,11 +58,11 @@ public class GerenteDTO implements Serializable {
 	}
 
 	public int getNum_clientes() {
-		return num_clientes;
+		return numClientes;
 	}
 
 	public void setNum_clientes(int num_clientes) {
-		this.num_clientes = num_clientes;
+		this.numClientes = num_clientes;
 	}
 
 	public static long getSerialversionuid() {
