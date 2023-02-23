@@ -4,6 +4,7 @@ import br.ufpr.bantads.model.*;
 import br.ufpr.bantads.repository.GerenteRepository;
 import org.apache.coyote.Response;
 import org.json.JSONObject;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +17,13 @@ public class GerenteService {
     @Autowired
     private GerenteRepository repo;
 
-    public ResponseDTO autoCadastro(PayloadDTO payloadDTO){
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public void autoCadastro(){
         Gerente g = repo.findFirstByOrderByNumClientes();
         g.setNum_clientes(g.getNum_clientes()+1);
         repo.save(g);
-        return new ResponseDTO(new GerenteResponseDTO("2e7aeda7-4d07-487e-8d5d-d75a41438140","2e7aeda7-4d07-487e-8d5d-d75a41438140"),"manager-ok");
     }
 
     public void removerGerente(GerenteDTO gerenteDTO){
@@ -29,7 +32,15 @@ public class GerenteService {
     }
 
     public void criarGerente(GerenteDTO gerenteDTO) {
-        Gerente g = repo.findLastByOrderByNumClientes();
-
+        try {
+            Gerente g = repo.findLastByOrderByNumClientes();
+            g.setNum_clientes(g.getNum_clientes() - 1);
+            gerenteDTO.setNum_clientes(1);
+            Gerente gerenteNovo = modelMapper.map(gerenteDTO, Gerente.class);
+            repo.save(g);
+            repo.save(gerenteNovo);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

@@ -13,23 +13,7 @@ import org.springframework.context.ApplicationListener;
 
 @Configuration
 public class GerenteAMQPConfiguration {
-    @Bean
-    public Jackson2JsonMessageConverter messageConverter(){
-        return  new Jackson2JsonMessageConverter();
-    }
 
-    @Bean
-    public Queue gerenteOk() {
-        return new Queue("orchestration-selfregistration-manager.ok");
-    }
-
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
-                                         Jackson2JsonMessageConverter messageConverter){
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(messageConverter);
-        return  rabbitTemplate;
-    }
 
     @Bean
     public RabbitAdmin criaRabbitAdmin(ConnectionFactory conn) {

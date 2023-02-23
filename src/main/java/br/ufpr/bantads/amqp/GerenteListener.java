@@ -21,24 +21,37 @@ public class GerenteListener {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @RabbitListener(queues = "orchestration-selfregistration-manager")
-    public void recebeAutoCadastro(@Payload PayloadDTO payloadDTO) {
-            System.out.println("Recebi a mensagem " + payloadDTO.toString());
-            ResponseDTO responseDTO = gerenteService.autoCadastro(payloadDTO);
+    @RabbitListener(queues = "orchestration-manager-register")
+    public void recebeAutoCadastro(@Payload String json) {
+            System.out.println("Recebi a mensagem " + json.toString());
+            gerenteService.autoCadastro();
     }
 
-    @RabbitListener(queues = "orchestration-manager-delete")
+    /*@RabbitListener(queues = "orchestration-manager-delete")
     public void recebeRemoverGerente(@Payload GerenteDTO gerenteDTO) {
         System.out.println("Recebi a mensagem " + gerenteDTO.toString());
         gerenteService.removerGerente(gerenteDTO);
     }
 
-    @RabbitListener(queues = "orchestration-manager-create")
-    public void recebeCriarGerente(@Payload GerenteDTO gerenteDTO) {
-        System.out.println("Recebi a mensagem " + gerenteDTO.toString());
-        gerenteService.criarGerente(gerenteDTO);
+   @RabbitListener(queues = "orchestration-selfregistration-manager")
+    public void recebeCriarGerente(@Payload String json) {
+        try {
+            JSONObject parsedJson = new JSONObject(json);
+            JSONObject manager = parsedJson.getJSONObject("manager");
+            JSONObject action = parsedJson.getJSONObject("action");
+            GerenteDTO gerenteDTO = new GerenteDTO();
+            if(action.getString("action").equals("create-manager")){
+                gerenteDTO.setId(manager.getString("id"));
+                gerenteDTO.setNome(manager.getString("nome"));
+                gerenteDTO.setEmail(manager.getString("email"));
+                gerenteDTO.setCpf(manager.getString("cpf"));
+            }
+            gerenteService.criarGerente(gerenteDTO);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
-
+*/
 
 
 }

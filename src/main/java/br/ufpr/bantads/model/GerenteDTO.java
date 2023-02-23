@@ -6,8 +6,7 @@ public class GerenteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	
+	private String id;
 	private String nome;
 	private String cpf;
 	private String email;
@@ -17,7 +16,7 @@ public class GerenteDTO implements Serializable {
 		super();
 	}
 	
-	public GerenteDTO(Long id, String nome, String email, String cpf) {
+	public GerenteDTO(String id, String nome, String email, String cpf) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -25,11 +24,11 @@ public class GerenteDTO implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

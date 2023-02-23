@@ -59,21 +59,6 @@ public class GerenteController {
 				new GerenteResponse(true, "Gerente encontrado com sucesso", mapper.map(g, GerenteDTO.class)),HttpStatus.OK);
 	}
 
-	@DeleteMapping("/gerentes/{id}")
-	public ResponseEntity<Object> removerGerente(@PathVariable("id") Long id) {
-		Optional<Gerente> g = repo.findById(id);
-		List<Gerente> gerentes = repo.findAll();
-		if (g.isPresent()) {
-			Gerente ger = g.get();
-			gerentes.sort(Comparator.comparing(Gerente::getNum_clientes));
-			repo.deleteById(ger.getId());
-			return new ResponseEntity<>(new GerenteResponse(true, "Gerente removido com sucesso", null), HttpStatus.OK);
-		}
-		return new ResponseEntity<>(new GerenteResponse(false, "Gerente informado não encontrado", null),
-				HttpStatus.NOT_FOUND);
-
-	}
-
 	@PutMapping("/gerentes/{id}")
 	public ResponseEntity<Object> alterarGerente(@PathVariable("id") Long id, @RequestBody Gerente gerente) {
 		Optional<Gerente> g = repo.findById(id);
