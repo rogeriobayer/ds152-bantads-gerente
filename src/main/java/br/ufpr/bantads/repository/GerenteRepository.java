@@ -8,5 +8,5 @@ public interface GerenteRepository extends JpaRepository<Gerente, Long>{
 	
 	public Gerente findByCpf(String cpf);
 	public Gerente findFirstByOrderByNumClientes();
-
+	public Gerente findLastByOrderByNumClientes();
 }

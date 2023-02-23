@@ -22,11 +22,23 @@ public class GerenteListener {
     private RabbitTemplate rabbitTemplate;
 
     @RabbitListener(queues = "orchestration-selfregistration-manager")
-    @RabbitHandler
     public void recebeAutoCadastro(@Payload PayloadDTO payloadDTO) {
             System.out.println("Recebi a mensagem " + payloadDTO.toString());
             ResponseDTO responseDTO = gerenteService.autoCadastro(payloadDTO);
-            rabbitTemplate.convertAndSend("orchestration-selfregistration-manager",responseDTO);
     }
+
+    @RabbitListener(queues = "orchestration-manager-delete")
+    public void recebeRemoverGerente(@Payload GerenteDTO gerenteDTO) {
+        System.out.println("Recebi a mensagem " + gerenteDTO.toString());
+        gerenteService.removerGerente(gerenteDTO);
+    }
+
+    @RabbitListener(queues = "orchestration-manager-create")
+    public void recebeCriarGerente(@Payload GerenteDTO gerenteDTO) {
+        System.out.println("Recebi a mensagem " + gerenteDTO.toString());
+        gerenteService.criarGerente(gerenteDTO);
+    }
+
+
 
 }
